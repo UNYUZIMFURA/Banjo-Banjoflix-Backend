@@ -1,0 +1,30 @@
+{
+  "name": "banjoflix-backend",
+  "version": "1.0.0",
+  "description": "Backend of BanjoFlix",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoyKevin1/BanjoFlix-Backend.git"
+  },
+  "author": "Kevin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoyKevin1/BanjoFlix-Backend/issues"
+  },
+  "homepage": "https://github.com/JoyKevin1/BanjoFlix-Backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "colors": "^1.4.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.2",
+    "nodemon": "^2.0.19",
+    "path": "^0.12.7"
+  }
+}
