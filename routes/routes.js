@@ -1,30 +1,24 @@
 const express = require('express')
-
 const router = express.Router()
+const {protect} = require('../middlewares/auth')
 
 const {
     handle_Homepage,
-    handleSignup_1,
-    handlePlan,
-    start_Membership
+    handleLogin,
+    handleSignup,
 } = require('../controllers/controllers')
 
 router
     .route('/rw')
-    .post(handle_Homepage)
+    .post(protect,handle_Homepage)
+
+router
+.route('/login')
+.post(handleLogin)
 
 router
     .route('/signup/password')
-    .post(handleSignup_1)
+    .post(handleSignup)
 
 
-router
-    .route('/signup/planform')
-    .post(handlePlan)
-
-router 
-    .route('/signup/registration')
-
-router
-    .route('/signup/regform')
-    .post(start_Membership)
+module.exports = router

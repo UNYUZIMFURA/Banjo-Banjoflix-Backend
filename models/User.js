@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema(
@@ -15,12 +16,18 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Add a password!']
         },
-
-        plan: {
-            type: String,
-            required: [true, 'Select a plan!'],
-        }
     }
 )
 
-module.exports = mongoose.model('user', UserSchema)
+UserSchema.methods.getToken = () => {
+return jwt.sign({
+    id: this._id
+},
+process.env.SECRET_KEY,
+{
+    expiresIn: process.env.JWT_EXPIRE
+}
+)
+}
+
+module.exports = mongoose.model('User', UserSchema)
