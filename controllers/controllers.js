@@ -12,7 +12,7 @@ exports.handle_Homepage = asyncHandler(async (req, res) => {
    )
   }
   res.status(200).json({
-    message: "Reached here"
+    success: true
   })
 });
 
