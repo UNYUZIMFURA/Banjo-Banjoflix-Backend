@@ -1,64 +1,70 @@
 const jwt = require("jsonwebtoken");
-const User = require('../models/User')
-const bcrypt = require('bcrypt')
-const asyncHandler = require('../middlewares/asyncHandler')
-const ErrorResponse = require('../utils/errorResponse')
+const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const asyncHandler = require("../middlewares/asyncHandler");
+const ErrorResponse = require("../utils/errorResponse");
 
 exports.handle_Homepage = asyncHandler(async (req, res) => {
   const email = req.body.email;
   if (!email) {
-    res.status(403).json({
-      message: "Provide an Email!",
-    });
-    return;
+   return next(
+    new ErrorResponse('Provide an Email!', 403)
+   )
   }
-
-  sendTokenResponse()
+  res.status(200).json({
+    message: "Reached here"
+  })
 });
 
-exports.handleLogin = asyncHandler(async (req, res) => {
+exports.handleLogin = asyncHandler(async (req, res,next) => {
   const email = req.body.email;
   const password = req.body.password;
-
   if (!email || !password) {
-    res.status(403).json({
-      message: "Fill all the fields!",
-    });
-    return;
+  return next(
+    new ErrorResponse('Fill all the fields!', 403)
+  )
   }
-  sendTokenResponse();
+  const user = await User.findOne({
+    email
+  })
+
+  if(!user) {
+    return next(new ErrorResponse('Invalid Credentials', 401))
+  }
+
+  const matchPasswords = await bcrypt.compare(password, user.password)
+  
+  if(!matchPasswords) {
+  return next(new ErrorResponse('Incorrect Password'))
+  }
+  sendTokenResponse(user,200,res);
 });
 
 exports.handleSignup = asyncHandler(async (req, res) => {
-  const email = req.body.email
-  const password = req.body.password
+  const email = req.body.email;
+  const password = req.body.password;
   if (!email || !password) {
-    res.status(403).json({
-      message: "Fill all the fields",
-    });
-    return
+    new ErrorResponse("Fill all the fields", 403);
+    return;
   }
-  const hash = await bcrypt.hash(password, 10)
+  const hash = await bcrypt.hash(password, 10);
   const user = await User.create({
     email,
-    password
-  })
+    password: hash,
+  });
   sendTokenResponse(user, 200, res);
 });
 
-const sendTokenResponse = (user,statusCode, res) => {
-  const token = user.getToken()
-  console.log(token)
-
+const sendTokenResponse = (user, statusCode, res) => {
+  const token = user.getToken();
   const options = {
-    expiresIn: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
-    httpOnly: true
-  }
+    expiresIn: new Date(
+      Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
 
-  res
-    .status(statusCode)
-    .cookie('token', token, options)
-    .json({
-      message: "Token Sent"
-    })
-}
+  res.status(statusCode).cookie("token", token, options).json({
+    message: "Token Sent",
+  });
+};

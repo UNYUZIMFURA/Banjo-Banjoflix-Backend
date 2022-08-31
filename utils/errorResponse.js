@@ -3,6 +3,6 @@ class ErrorResponse extends Error {
     super(message);
     this.statusCode = statusCode
   }
-}
+} 
 
 module.exports = ErrorResponse

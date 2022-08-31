@@ -25,7 +25,7 @@ return jwt.sign({
 },
 process.env.SECRET_KEY,
 {
-    expiresIn: process.env.JWT_EXPIRE
+    expiresIn: process.env.JWT_EXPIRES
 }
 )
 }

@@ -9,15 +9,15 @@ const {
 } = require('../controllers/controllers')
 
 router
-    .route('/rw')
-    .post(protect,handle_Homepage)
+    .route('/homepage')
+    .post(handle_Homepage)
 
 router
 .route('/login')
 .post(handleLogin)
 
 router
-    .route('/signup/password')
+    .route('/signup')
     .post(handleSignup)
 
 

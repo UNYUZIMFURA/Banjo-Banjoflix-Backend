@@ -4,6 +4,7 @@
   "description": "Backend of BanjoFlix",
   "main": "server.js",
   "scripts": {
+    "start": "NODE_ENV=production node server",
     "dev": "nodemon server"
   },
   "repository": {
