@@ -1,10 +1,10 @@
-const ErrorResponse = require('../utils/errorResponse')
+const ErrorResponse = require("../utils/errorResponse");
 
 const errorHandler = (err, req, res, next) => {
-  let error = {...err}
-  error.message = err.message
+  let error = { ...err };
+  error.message = err.message;
 
- if (err.name === "CastError") {
+  if (err.name === "CastError") {
     const message = `User not found of ${req.params.id}`;
     error = new ErrorResponse(message, 404);
   }
@@ -15,7 +15,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (err.name === "ValidationError") {
-    const message = Object.values(err.errors).map(val => val.message);
+    const message = Object.values(err.errors).map((val) => val.message);
     error = new ErrorResponse(message, 400);
   }
 
