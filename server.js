@@ -1,18 +1,19 @@
 const express = require("express");
 const app = express();
+const cors = require('cors')
 const connectDB = require("./config/db");
 const routes = require("./routes/routes.js");
 const colors = require("colors");
 const errorHandler = require("./middlewares/error");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-// const cors = require('cors')
 
 dotenv.config({ path: "./config/config.env" });
 
 const PORT = process.env.BANJOFLIX_PORT;
 
-// connectDB()
+connectDB()
+app.use(cors())
 app.use(express.json());
 app.use(cookieParser());
 app.use("/", routes);
