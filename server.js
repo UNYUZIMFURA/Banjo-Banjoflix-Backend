@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 
 dotenv.config({ path: "./config/config.env" });
 
-const PORT = process.env.BANJOFLIX_PORT || 3030;
+const PORT = process.env.PORT || 3030;
 
 connectDB()
 app.use(cors())
