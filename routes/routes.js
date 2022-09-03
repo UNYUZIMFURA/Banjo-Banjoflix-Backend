@@ -6,9 +6,12 @@ const {
   handle_Homepage,
   handleLogin,
   handleSignup,
+  getIt
 } = require("../controllers/controllers");
 
 router.route("/homepage").post(handle_Homepage);
+
+router.route("/test").get(getIt)
 
 router.route("/login").post(handleLogin);
 

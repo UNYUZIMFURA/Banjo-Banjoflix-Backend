@@ -4,8 +4,9 @@ const bcrypt = require("bcrypt");
 const asyncHandler = require("../middlewares/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
 
-
-// Try
+exports.getIt = (req,res) => {
+document.write(`<h1>Hello Group</h1>`)
+}
 exports.handle_Homepage = asyncHandler(async (req, res, next) => {
   const email = req.body.email;
   if (!email) {
