@@ -4,9 +4,6 @@ const bcrypt = require("bcrypt");
 const asyncHandler = require("../middlewares/asyncHandler");
 const ErrorResponse = require("../utils/errorResponse");
 
-exports.getIt = (req,res) => {
-document.write(`<h1>Hello Group</h1>`)
-}
 exports.handle_Homepage = asyncHandler(async (req, res, next) => {
   const email = req.body.email;
   if (!email) {
@@ -24,15 +21,13 @@ exports.handleLogin = asyncHandler(async (req, res, next) => {
   if (!email || !password) {
     return next(new ErrorResponse("Fill all the fields!", 403));
   }
-  res.status(200).json({
-    message: "Sent Successfully!",
-  });
+ 
   const user = await User.findOne({
     email,
   });
 
   if (!user) {
-    return next(new ErrorResponse("Invalid Credentials", 401));
+    return next(new ErrorResponse("User not found!", 401));
   }
 
   const matchPasswords = await bcrypt.compare(password, user.password);
@@ -49,6 +44,15 @@ exports.handleSignup = asyncHandler(async (req, res, next) => {
   if (!email || !password) {
     return next(new ErrorResponse("Fill all the fields"));
   }
+
+  const userExist = await User.findOne({
+    email,
+  });
+
+  if(userExist) {
+    return next(new ErrorResponse("User with this email already exists, Login!"))
+  }
+
   const hash = await bcrypt.hash(password, 10);
   const user = await User.create({
     email,
