@@ -12,7 +12,7 @@ dotenv.config({ path: "./config/config.env" });
 
 const PORT = process.env.PORT || 3030;
 
-// connectDB()
+connectDB()
 app.use(cors())
 app.use(express.json());
 app.use(cookieParser());
