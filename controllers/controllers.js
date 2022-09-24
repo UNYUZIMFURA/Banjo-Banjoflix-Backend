@@ -22,7 +22,7 @@ exports.handleLogin = asyncHandler(async (req, res, next) => {
   const matchPasswords = await bcrypt.compare(password, user.password);
 
   if (!matchPasswords) {
-    return next(new ErrorResponse("Incorrect Password!", 403));
+    return next(new ErrorResponse("Incorrect Password Test!", 403));
   }
   sendTokenResponse(user, 200, res);
 });
